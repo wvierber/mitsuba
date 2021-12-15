@@ -5,7 +5,9 @@ class PkgConfig(dict):
     _paths = [
         '/usr/lib/pkgconfig',
         '/usr/lib/%s-linux-gnu/pkgconfig' % (os.uname()[4]),
-        '/usr/lib%i/pkgconfig' % (struct.calcsize('P')*8)
+        '/usr/lib%i/pkgconfig' % (struct.calcsize('P')*8),
+        '/root/miniconda3/lib/pkgconfig',
+        '/root/anaconda3/lib/pkgconfig'
     ]
 
     def __init__(self, name):
@@ -42,9 +44,12 @@ def find_boost_python(version):
     libnames = [
         'boost_python-mt-py%s' % version,
         'boost_python-py%s' % version,
+        'boost_python%s' % version,
         'boost_python' + ('3' if version.startswith('3') else '')
     ]
     basepaths = [
+        '/root/miniconda3/lib/',
+        '/root/anaconda3/lib/',
         '/usr/lib',
         '/usr/lib/%s-linux-gnu' % (os.uname()[4]),
         '/usr/lib%i' % (struct.calcsize('P')*8)
@@ -57,7 +62,7 @@ def find_boost_python(version):
     return None
 
 def detect_python():
-    pyver = ['2.6', '2.7', '3.0', '3.1', '3.2', '3.3', '3.4', '3.5', '3.6']
+    pyver = ['2.6', '2.7', '3.0', '3.1', '3.2', '3.3', '3.4', '3.5', '3.6', '3.7']
     pyenv = {}
 
     for version in pyver:
@@ -83,6 +88,8 @@ def detect_python():
                 pyenv['PYTHON' + version + 'LIBDIR'] += [flag[2:]]
             elif flag.startswith('-l'):
                 pyenv['PYTHON' + version + 'LIB'] += [flag[2:]]
+    print('found some boost python')
+    print(pyenv)
     return pyenv
 
 if __name__ == '__main__':
