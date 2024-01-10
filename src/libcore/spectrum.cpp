@@ -26,7 +26,7 @@ MTS_NAMESPACE_BEGIN
  * @{ \name Forward declaration:
  * CIE 1931 XYZ color matching functions.
  */
-static const int   CIE_samples = 471;
+static const int   CIE_samples = 601;
 extern const Float CIE_wavelengths[CIE_samples];
 extern const Float CIE_X_entries[CIE_samples];
 extern const Float CIE_Y_entries[CIE_samples];
